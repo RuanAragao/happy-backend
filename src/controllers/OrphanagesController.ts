@@ -1,8 +1,19 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm'
 import Orphanage from '../models/Orphanages'
 
 export default {
+  async index (request: Request, response: Response, next: NextFunction) {
+    try {
+      const orphanagesRepository = getRepository(Orphanage);
+
+      const orphanages = await orphanagesRepository.find();
+      return response.status(200).json(orphanages);
+    } catch (error) {
+      return response.status(300).json(error);
+    }
+  },
+
   async create (request: Request, response: Response) {
     const {
       name,
