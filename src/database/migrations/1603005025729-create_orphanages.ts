@@ -42,7 +42,7 @@ export class createOrphanages1603005025729 implements MigrationInterface {
           type: 'text'
         },
         {
-          name: 'open_hours',
+          name: 'opening_hours',
           type: 'varchar',
         },
         {
