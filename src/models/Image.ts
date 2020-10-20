@@ -3,43 +3,24 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany,
+  ManyToOne,
   JoinColumn
 } from 'typeorm'
-import Image from './Image';
+import Orphanage from './Orphanages';
 
 // Decorator dizendo que a classe a seguir é uma entidade da tabela "orphanages"
-@Entity('orphanages')
-export default class Orphanage {
+@Entity('images')
+export default class Image {
   // Coluna primaria com auto incremento
   @PrimaryGeneratedColumn('increment')
   id: number;
 
   // Decorator informando que é uma coluna
   @Column()
-  name: string;
+  path: string;
 
-  @Column()
-  latitude: number;
-
-  @Column()
-  longitude: number;
-
-  @Column()
-  about: string;
-
-  @Column()
-  instructions: string;
-
-  @Column()
-  opening_hours: string;
-
-  @Column()
-  open_on_weekends: boolean;
-
-  @OneToMany(() => Image, image => image.orphanage, {
-    cascade: ['insert', 'update']
-  })
+  // Relacionamento
+  @ManyToOne(() => Orphanage, orphanage => orphanage.images)
   @JoinColumn({ name: 'orphanage_id' })
-  images: Image[];
+  orphanage: Orphanage;
 }
